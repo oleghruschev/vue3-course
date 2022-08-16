@@ -1,32 +1,13 @@
 <template>
-  <div class="app">
-    <form class="form" @submit.prevent>
-      <input
-        class="input"
-        type="text"
-        v-bind:value="title"
-        @input="inputTitle"
-        placeholder="title"
-      />
-      <input
-        class="input"
-        type="body"
-        v-bind:value="body"
-        @input="body = $event.target.value"
-        placeholder="body"
-      />
-      <button class="btn" @click="createPost">add post</button>
-    </form>
-
-    <div class="post" v-for="post in posts" :key="post.id">
-      <div><strong>Title:</strong> {{ post.title }}</div>
-      <div><strong>Description:</strong> {{ post.body }}</div>
-    </div>
-  </div>
+  <div class="app"><post-form /> <post-list :posts="posts" /></div>
 </template>
 
-<script lang="ts">
+<script>
+import PostForm from '@/components/PostForm';
+import PostList from '@/components/PostList';
+
 export default {
+  components: { PostForm, PostList },
   data() {
     return {
       title: '',
@@ -39,23 +20,10 @@ export default {
     };
   },
   methods: {
-    createPost() {
-      if (!this.title || !this.body) return;
-
-      const newPost = {
-        id: new Date(),
-        title: this.title,
-        body: this.body,
-      };
-      // @ts-ignore
-      this.posts.push(newPost);
-      this.title = '';
-      this.body = '';
-    },
-    inputTitle(e: any) {
+    inputTitle(e) {
       this.title = e.target.value;
     },
-    inputBody(e: any) {
+    inputBody(e) {
       this.body = e.target.value;
     },
   },
@@ -70,34 +38,5 @@ export default {
 
 .app {
   padding: 20px;
-}
-
-.post {
-  padding: 15px;
-  border: 2px solid teal;
-  margin-top: 15px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.input {
-  border: 1px solid teal;
-  padding: 10px 15px;
-  margin-bottom: 15px;
-}
-
-.btn {
-  padding: 10px 15px;
-  background: none;
-  color: teal;
-  border: 1px solid teal;
-  margin-bottom: 15px;
-  align-self: flex-end;
-}
-
-.form {
-  display: flex;
-  flex-direction: column;
 }
 </style>
