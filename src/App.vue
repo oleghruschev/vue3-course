@@ -1,5 +1,8 @@
 <template>
-  <div class="app"><post-form /> <post-list :posts="posts" /></div>
+  <div class="app">
+    <post-form @create="createPost" />
+    <post-list :posts="posts" />
+  </div>
 </template>
 
 <script>
@@ -20,11 +23,8 @@ export default {
     };
   },
   methods: {
-    inputTitle(e) {
-      this.title = e.target.value;
-    },
-    inputBody(e) {
-      this.body = e.target.value;
+    createPost(newPost) {
+      this.posts.push(newPost);
     },
   },
 };

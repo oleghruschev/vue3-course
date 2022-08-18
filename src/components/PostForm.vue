@@ -30,16 +30,18 @@ export default {
   },
   methods: {
     createPost() {
-      if (!this.title || !this.body) return;
-
       const newPost = {
         id: new Date(),
-        title: this.title,
-        body: this.body,
+        ...this.post,
       };
-      this.posts.push(newPost); // continue here. Stop at 41:24
-      this.title = '';
-      this.body = '';
+
+      if (this.post.title && this.post.body) {
+        this.$emit('create', newPost);
+        this.post = {
+          title: '',
+          body: '',
+        };
+      }
     },
   },
 };
