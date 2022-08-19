@@ -17,3 +17,9 @@ yarn build
 
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
+
+
+### Video
+https://www.youtube.com/watch?v=XzLuMtDelGk
+
+stoped: 58:24

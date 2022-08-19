@@ -4,9 +4,7 @@
       <div><strong>Title:</strong> {{ post.title }}</div>
       <div><strong>Description:</strong> {{ post.body }}</div>
     </div>
-    <div class="post__btns">
-      <button>Удалить</button>
-    </div>
+    <my-button @click="">Удалить</my-button>
   </div>
 </template>
 
