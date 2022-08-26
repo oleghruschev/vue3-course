@@ -22,4 +22,4 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 ### Video
 https://www.youtube.com/watch?v=XzLuMtDelGk
 
-stoped: 1:10:20
+stoped: 1:17:20
