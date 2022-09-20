@@ -1,16 +1,26 @@
 <template>
   <div class="app">
-    <my-button @click="openDialog">Создать пост</my-button>
+    <h1>Страница с постами</h1>
+    <div class="app-buttons">
+      <my-button @click="openDialog">Создать пост</my-button>
+      <my-select v-model="selectedSort" :options="sortOptions" />
+    </div>
     <my-dialog v-model:show="dialogVisible">
       <post-form @create="createPost" />
     </my-dialog>
-    <post-list :posts="posts" @remove="removePost" />
+    <post-list
+      :posts="posts"
+      @remove="removePost"
+      v-if="!isLoading"
+    />
+    <div v-else>Идет загрузка...</div>
   </div>
 </template>
 
 <script>
 import PostForm from '@/components/PostForm';
 import PostList from '@/components/PostList';
+import axios from 'axios';
 
 export default {
   components: { PostForm, PostList },
@@ -18,12 +28,14 @@ export default {
     return {
       title: '',
       body: '',
-      posts: [
-        { id: 1, title: 'Post1', body: 'Some text about js 1' },
-        { id: 2, title: 'Post2', body: 'Some text about js 2' },
-        { id: 3, title: 'Post3', body: 'Some text about js 3' },
-      ],
+      posts: [],
       dialogVisible: false,
+      isLoading: false,
+      selectedSort: '',
+      sortOptions: [
+        { value: 'title', name: 'По названию' },
+        { value: 'body', name: 'По содержимому' },
+      ],
     };
   },
   methods: {
@@ -40,6 +52,23 @@ export default {
     closeDialog() {
       this.dialogVisible = false;
     },
+    async fetchPosts() {
+      try {
+        this.isLoading = true;
+        const response = await axios.get(
+          'https://jsonplaceholder.typicode.com/posts?_limit=10',
+        );
+
+        this.posts = response.data;
+      } catch (e) {
+        alert(e);
+      } finally {
+        this.isLoading = false;
+      }
+    },
+  },
+  mounted() {
+    this.fetchPosts();
   },
 };
 </script>
@@ -52,5 +81,10 @@ export default {
 
 .app {
   padding: 20px;
+}
+
+.app-buttons {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
