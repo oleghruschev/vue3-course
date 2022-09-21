@@ -8,8 +8,13 @@
     <my-dialog v-model:show="dialogVisible">
       <post-form @create="createPost" />
     </my-dialog>
-    <post-list
+    <!-- <post-list
       :posts="posts"
+      @remove="removePost"
+      v-if="!isLoading"
+    /> -->
+    <post-list
+      :posts="sortedPosts"
       @remove="removePost"
       v-if="!isLoading"
     />
@@ -69,6 +74,23 @@ export default {
   },
   mounted() {
     this.fetchPosts();
+  },
+  // watch: {
+  //   selectedSort(newValue) {
+  //     this.posts.sort((post1, post2) => {
+  //       // return post1[this.selectedSort]?.localeCompare(
+  //       //   post2[this.selectedSort],
+  //       // );
+  //       return post1[newValue]?.localeCompare(post2[newValue]);
+  //     });
+  //   },
+  // },
+  computed: {
+    sortedPosts() {
+      return [...this.posts].sort((post1, post2) =>
+        post1[this.selectedSort]?.localeCompare(post2[this.selected]),
+      );
+    },
   },
 };
 </script>

@@ -34,6 +34,17 @@ export default {
       }
     },
   },
+  watch: {
+    // post(newValue) {
+    //   console.log(111, newValue);
+    // },
+    post: {
+      handler(newValue) {
+        console.log(22, newValue);
+      },
+      deep: true,
+    },
+  },
 };
 </script>
 
