@@ -5,7 +5,13 @@
       <div><strong>Title:</strong> {{ post.title }}</div>
       <div><strong>Description:</strong> {{ post.body }}</div>
     </div>
-    <my-button @click="$emit('remove', post)">Удалить</my-button>
+    <div class="post__btns">
+      <my-button
+        @click="($event) => $router.push(`/posts/${post.id}`)"
+        >Открыть</my-button
+      >
+      <my-button @click="$emit('remove', post)">Удалить</my-button>
+    </div>
   </div>
 </template>
 
